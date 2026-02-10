@@ -123,6 +123,7 @@ function CheckIcon(props: React.SVGProps<SVGSVGElement>) {
 export default function Page() {
   const activeId = useActiveSection(NAV.map((n) => n.id));
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [wordShotFailed, setWordShotFailed] = React.useState(false);
 
   React.useEffect(() => {
     const prev = document.documentElement.style.scrollBehavior;
@@ -516,68 +517,87 @@ export default function Page() {
                   <div className="relative">
                     <div className="flex items-center justify-between">
                       <p className="text-xs font-semibold tracking-wide text-zinc-300">
-                        Draft Preview
+                        Microsoft Word add-in
                       </p>
-                      <span className="rounded-full bg-emerald-400/10 px-2 py-1 text-[11px] font-semibold text-emerald-200 ring-1 ring-emerald-300/15">
-                        Guardrails on
+                      <span className="rounded-full bg-white/5 px-2 py-1 text-[11px] font-semibold text-zinc-200 ring-1 ring-white/10">
+                        Preside for Word
                       </span>
                     </div>
 
-                    <div className="mt-5 space-y-4">
-                      <div className="rounded-2xl bg-zinc-950/50 p-4 ring-1 ring-white/10">
-                        <p className="text-xs font-semibold text-zinc-200">
-                          Facts (captured)
-                        </p>
-                        <ul className="mt-2 space-y-2 text-sm text-zinc-300">
-                          <li className="flex gap-2">
-                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-300/80" />
-                            Observed device behavior consistent with distribution
-                            activity.
-                          </li>
-                          <li className="flex gap-2">
-                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-300/80" />
-                            Identified location(s), date/time windows, and source
-                            of information.
-                          </li>
-                        </ul>
-                      </div>
-
-                      <div className="rounded-2xl bg-zinc-950/50 p-4 ring-1 ring-white/10">
-                        <p className="text-xs font-semibold text-zinc-200">
-                          Judicial scrutiny checks
-                        </p>
-                        <div className="mt-2 grid gap-2 sm:grid-cols-2">
-                          {[
-                            "Nexus clarity",
-                            "Staleness risk",
-                            "Scope limits",
-                            "Inference labeling",
-                          ].map((x) => (
-                            <div
-                              key={x}
-                              className="rounded-xl bg-white/5 px-3 py-2 text-xs font-semibold text-zinc-300 ring-1 ring-white/10"
-                            >
-                              {x}
+                    <div className="mt-5">
+                      {!wordShotFailed ? (
+                        <img
+                          src="/product/word-addin.png"
+                          alt="Preside add-in inside Microsoft Word"
+                          className="h-auto w-full rounded-2xl bg-white/90 ring-1 ring-white/10"
+                          loading="lazy"
+                          onError={() => setWordShotFailed(true)}
+                        />
+                      ) : (
+                        <div className="overflow-hidden rounded-2xl bg-white/5 ring-1 ring-white/10">
+                          <div className="grid grid-cols-12">
+                            <div className="col-span-7 border-r border-white/10 bg-gradient-to-b from-white/[0.06] to-transparent p-4">
+                              <div className="h-3 w-28 rounded bg-white/10" />
+                              <div className="mt-4 space-y-2">
+                                {Array.from({ length: 9 }).map((_, i) => (
+                                  <div
+                                    key={i}
+                                    className="h-2 rounded bg-white/10"
+                                    style={{ width: `${85 - i * 3}%` }}
+                                  />
+                                ))}
+                              </div>
+                              <div className="mt-4 space-y-2">
+                                {Array.from({ length: 6 }).map((_, i) => (
+                                  <div
+                                    key={`b-${i}`}
+                                    className="h-2 rounded bg-white/10"
+                                    style={{ width: `${80 - i * 4}%` }}
+                                  />
+                                ))}
+                              </div>
                             </div>
-                          ))}
+                            <div className="col-span-5 bg-zinc-950/20 p-4">
+                              <div className="flex items-center justify-between">
+                                <div className="text-[11px] font-semibold text-zinc-200">
+                                  Preside for Word
+                                </div>
+                                <span className="rounded-full bg-emerald-400/10 px-2 py-1 text-[10px] font-semibold text-emerald-200 ring-1 ring-emerald-300/15">
+                                  Connected
+                                </span>
+                              </div>
+                              <div className="mt-4 space-y-2">
+                                {[
+                                  "Read structure",
+                                  "Pull facts from systems",
+                                  "Write draft sections",
+                                  "Review for completeness",
+                                ].map((x) => (
+                                  <div
+                                    key={x}
+                                    className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2 text-[11px] font-semibold text-zinc-200 ring-1 ring-white/10"
+                                  >
+                                    <span className="h-1.5 w-1.5 rounded-full bg-cyan-300/80" />
+                                    <span className="truncate">{x}</span>
+                                  </div>
+                                ))}
+                              </div>
+                              <div className="mt-4 rounded-xl bg-white/5 p-3 text-[11px] text-zinc-300 ring-1 ring-white/10">
+                                Drop a screenshot into{" "}
+                                <span className="font-semibold text-zinc-100">
+                                  public/product/word-addin.png
+                                </span>{" "}
+                                to show your real add-in UI here.
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-
-                      <div className="rounded-2xl bg-zinc-950/50 p-4 ring-1 ring-white/10">
-                        <p className="text-xs font-semibold text-zinc-200">
-                          Output
-                        </p>
-                        <p className="mt-2 text-sm leading-6 text-zinc-300">
-                          DA-template-ready narrative blocks with facts separated
-                          from inference and a clear nexus to the items to be
-                          seized.
-                        </p>
-                      </div>
+                      )}
                     </div>
 
                     <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-5">
                       <p className="text-xs text-zinc-400">
-                        No external images. No invented facts.
+                        Works inside Microsoft Word. Integrates with your systems.
                       </p>
                       <a
                         href={CALENDLY_URL}
